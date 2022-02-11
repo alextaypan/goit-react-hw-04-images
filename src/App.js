@@ -10,17 +10,6 @@ import { Modal } from "./components/Modal/Modal";
 import { Loader } from "./components/Loader/Loader";
 
 const App = () => {
-  // state = {
-  //   images: [],
-  //   isLoading: false,
-  //   query: "",
-  //   error: null,
-  //   page: 1,
-  //   isOpenModal: false,
-  //   largeImageURL: null,
-  //   total: null,
-  // };
-
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
@@ -30,27 +19,9 @@ const App = () => {
   const [largeImageURL, setLargeImageURL] = useState(null);
   const [total, setTotal] = useState(null);
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (
-  //     prevState.query !== this.state.query ||
-  //     prevState.page !== this.state.page
-  //   ) {
-  //     fetchData();
-  //   }
-  // }
-
-  useEffect(() => {
-    setPage(page);
-    if (!query) return;
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, page]);
-
   const fetchData = () => {
-    // const { query, page } = this.state;
     const perPage = 12;
 
-    // this.setState({ error: null, isLoading: true });
     setError(null);
     setIsLoading(true);
 
@@ -69,7 +40,6 @@ const App = () => {
         if (page === totalPages) {
           toast.info("We're sorry, you've reached the end of search results.");
         }
-        // images: [...prevState.images, ...hits],
         setImages((prev) => [...prev, ...hits]);
         setTotal(totalHits);
       })
@@ -78,36 +48,27 @@ const App = () => {
   };
 
   const changeSearch = (query) => {
-    // this.setState({ query, page: 1, images: [] });
     setQuery(query);
     setPage(1);
     setImages([]);
   };
 
   const handleLoadMore = () => {
-    // this.setState((prev) => ({ page: prev.page + 1 }));
     setPage((prev) => prev + 1);
   };
 
-  const switchModal = () => {
-    // this.setState(({ isOpenModal }) => ({
-    //   isOpenModal: !isOpenModal,
-    // }));
-    // this.setState({ largeImageURL: largeImageURL });
-    setIsOpenModal((prev) => !prev);
-    setLargeImageURL({ largeImageURL });
+  const switchModal = (largeImageURL) => {
+    setIsOpenModal(!isOpenModal);
+    setLargeImageURL(largeImageURL);
   };
 
-  // const {
-  //   images,
-  //   error,
-  //   isLoading,
-  //   query,
-  //   total,
-  //   isOpenModal,
-  //   largeImageURL,
-  //   tags,
-  // } = this.state;
+  useEffect(() => {
+    setPage(page);
+    if (!query) return;
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, page]);
+
   const lastPage = images.length !== total && images.length !== 0;
   return (
     <>

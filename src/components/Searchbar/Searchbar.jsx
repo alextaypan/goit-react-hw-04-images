@@ -8,7 +8,7 @@ export const Searchbar = ({ changeSearch }) => {
   const [query, setQuery] = useState("");
 
   const handleChange = (event) => {
-    setQuery(event.target.value);
+    setQuery(event.target.value.toLowerCase());
   };
 
   const handleSubmit = (event) => {

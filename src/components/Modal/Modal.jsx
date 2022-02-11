@@ -6,14 +6,6 @@ import PropTypes from "prop-types";
 const modalRoot = document.querySelector("#modal-root");
 
 export const Modal = ({ onClose, children }) => {
-  useEffect(() => {
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  });
-
   const onKeyDown = (event) => {
     if (event.code === "Escape") {
       onClose();
@@ -25,6 +17,14 @@ export const Modal = ({ onClose, children }) => {
       onClose();
     }
   };
+
+  useEffect(() => {
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  });
 
   return createPortal(
     <div className={s.overlay} onClick={onBackdropClick}>
